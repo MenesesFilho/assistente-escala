@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Assistente Gerador de Escalas</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 24px; max-width: 920px; }
+    header { margin-bottom: 16px; }
+    .card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+    label { display:block; margin: 8px 0 4px; font-weight:600; }
+    input, select { width: 100%; padding: 10px; box-sizing: border-box; }
+    textarea { width:100%; height:120px; padding:10px; }
+    .row { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    button { padding: 10px 16px; cursor: pointer; }
+    footer { margin-top: 24px; font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Assistente Gerador de Escalas</h1>
+    <p>Preencha os campos e envie as planilhas. O sistema gera a escala no seu modelo.</p>
+  </header>
+
+  <form action="/gerar" method="post" enctype="multipart/form-data">
+    <div class="card">
+      <div class="row">
+        <div>
+          <label>Nome da loja</label>
+          <input type="text" name="loja" placeholder="San Paolo - Iguatemi" required />
+        </div>
+        <div>
+          <label>Nº de funcionários</label>
+          <input type="number" name="num_func" min="1" value="10" required />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Horário de abertura (HH:MM)</label>
+          <input type="time" name="abertura" value="10:00" required />
+        </div>
+        <div>
+          <label>Horário de fechamento (HH:MM)</label>
+          <input type="time" name="fechamento" value="22:00" required />
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>Tipo de escala</label>
+          <select name="tipo_escala">
+            <option value="5x2" selected>5x2</option>
+            <option value="6x1">6x1</option>
+          </select>
+        </div>
+        <div>
+          <label>Carga horária semanal (h úteis)</label>
+          <input type="number" name="carga" min="20" max="60" value="44" required />
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <label>1) MODELO DE ESCALA.xlsx</label>
+      <input type="file" name="modelo" accept=".xlsx" required />
+      <label>2) VENDAS por DIA (Iguatemi - DIA)</label>
+      <input type="file" name="vendas_dia" accept=".xlsx,.xls,.xltx" required />
+      <label>3) VENDAS por HORA (Iguatemi - HORA)</label>
+      <input type="file" name="vendas_hora" accept=".xlsx,.xls,.xltx" required />
+    </div>
+
+    <button type="submit">Gerar Escala</button>
+  </form>
+
+  <footer>
+    <p>Observação: o arquivo gerado segue exatamente a aba "Escala San Paolo" do seu modelo.</p>
+  </footer>
+</body>
+</html>
